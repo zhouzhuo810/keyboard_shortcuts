@@ -54,7 +54,7 @@ bool _isPressed(Set<LogicalKeyboardKey> keysPressed, Set<LogicalKeyboardKey> key
 
   for (final rightElement in rights) {
     var leftElement =
-        lefts.firstWhere((element) => element.debugName.split(" ")[0] == rightElement.debugName.split(" ")[0], orElse: () => null);
+        lefts.isEmpty ? null : lefts.firstWhere((element) => element.debugName.split(" ")[0] == rightElement.debugName.split(" ")[0], orElse: () => null);
     if (leftElement != null) {
       var actualKey = keysToPress.where((element) => element.debugName.split(" ")[0] == rightElement.debugName.split(" ")[0]);
       if (actualKey != null && actualKey.length > 0 && actualKey.first.debugName.isNotEmpty)
