@@ -48,39 +48,39 @@ void initShortCuts(
 }
 
 bool _isPressed(
-    Set<LogicalKeyboardKey?> keysPressed, Set<LogicalKeyboardKey?>? keysToPress) {
+    Set<LogicalKeyboardKey?>? keysPressed, Set<LogicalKeyboardKey?>? keysToPress) {
   //when we type shift on chrome flutter's core return two pressed keys : Shift Left && Shift Right. So we need to delete one on the set to run the action
-  var rights = keysPressed
-      .where((element) => element?.debugName?.contains("Right") ?? false);
-  var lefts = keysPressed
-      .where((element) => element?.debugName?.contains("Left") ?? false);
+  var rights = keysPressed?.where((element) => element?.debugName?.contains("Right") ?? false);
+  var lefts = keysPressed?.where((element) => element?.debugName?.contains("Left") ?? false);
   var toRemove = [];
 
-  for (final rightElement in rights) {
-    var leftElement = lefts.isEmpty
-        ? null
-        : lefts.firstWhere(
-            (element) =>
-                element?.debugName != null &&
-                rightElement?.debugName != null &&
-                element?.debugName!.split(" ")[0] ==
-                    rightElement?.debugName!.split(" ")[0],
-            orElse: () => null);
-    if (leftElement != null) {
-      var actualKey = keysToPress?.where((element) =>
-          element?.debugName?.split(" ")[0] ==
-          rightElement?.debugName?.split(" ")[0]);
-      if ((actualKey?.length ?? 0) > 0 &&
-          (actualKey?.first?.debugName?.isNotEmpty ?? false))
-        (actualKey?.first?.debugName?.contains("Right") ?? false)
-            ? toRemove.add(leftElement)
-            : toRemove.add(rightElement);
+  if (rights != null) {
+    for (final rightElement in rights) {
+      LogicalKeyboardKey? leftElement = lefts == null || lefts.isEmpty
+          ? null
+          : lefts.firstWhere(
+              (element) =>
+          element?.debugName != null &&
+              rightElement?.debugName != null &&
+              element?.debugName!.split(" ")[0] ==
+                  rightElement?.debugName!.split(" ")[0],
+          orElse: () => null);
+      if (leftElement != null) {
+        var actualKey = keysToPress?.where((element) =>
+        element?.debugName?.split(" ")[0] ==
+            rightElement?.debugName?.split(" ")[0]);
+        if ((actualKey?.length ?? 0) > 0 &&
+            (actualKey?.first?.debugName?.isNotEmpty ?? false))
+          (actualKey?.first?.debugName?.contains("Right") ?? false)
+              ? toRemove.add(leftElement)
+              : toRemove.add(rightElement);
+      }
     }
   }
 
-  keysPressed.removeWhere((e) => toRemove.contains(e));
+  keysPressed?.removeWhere((e) => toRemove.contains(e));
 
-  return keysToPress != null && keysPressed.containsAll(keysToPress) &&
+  return keysToPress != null && keysPressed != null && keysPressed.containsAll(keysToPress) &&
       keysPressed.length == keysToPress.length;
 }
 
