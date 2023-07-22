@@ -72,16 +72,6 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ),
       ),
-      floatingActionButton: KeyBoardShortcuts(
-        keysToPress: shortCut(BasicShortCuts.creation),
-        onKeysPressed: _incrementCounter,
-        helpLabel: "Increment",
-        child: FloatingActionButton(
-          onPressed: _incrementCounter,
-          tooltip: 'Increment',
-          child: Icon(Icons.add),
-        ),
-      ),
     );
   }
 }
@@ -95,22 +85,19 @@ class SecondPage extends StatelessWidget {
       appBar: AppBar(
         title: Text("Second Page"),
       ),
-      body: KeyBoardShortcuts(
-        globalShortcuts: true,
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Expanded(
-                child: ListView.builder(
-                  itemCount: generatedList.length,
-                  itemBuilder: (BuildContext ctxt, int index) => Center(
-                    child: Text(generatedList[index]),
-                  ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Expanded(
+              child: ListView.builder(
+                itemCount: generatedList.length,
+                itemBuilder: (BuildContext ctxt, int index) => Center(
+                  child: Text(generatedList[index]),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
